@@ -86,7 +86,7 @@ class SignInActivity : AppCompatActivity() {
 
                 val token = response.body()
                 if (response.isSuccessful && null != token) {
-                    authTokenProvider.updateToken(token.accessToken)
+                    authTokenProvider.token = token.accessToken
 
                     launchMainActivity()
                 } else {
