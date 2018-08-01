@@ -1,10 +1,10 @@
 package com.androidhuman.example.simplegithub.api;
 
-import com.androidhuman.example.simplegithub.data.AuthTokenProvider;
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import com.androidhuman.example.simplegithub.data.AuthTokenProvider;
 
 import java.io.IOException;
 
