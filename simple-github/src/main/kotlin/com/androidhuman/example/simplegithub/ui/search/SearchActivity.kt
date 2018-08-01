@@ -12,8 +12,10 @@ import android.view.inputmethod.InputMethodManager
 import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.model.GithubRepo
 import com.androidhuman.example.simplegithub.api.provideGithubApi
+import com.androidhuman.example.simplegithub.data.provideSearchHistoryDao
 import com.androidhuman.example.simplegithub.extensions.plusAssign
-import com.androidhuman.example.simplegithub.ui.AutoClearedDisposable
+import com.androidhuman.example.simplegithub.extensions.runOnIoScheduler
+import com.androidhuman.example.simplegithub.rx.AutoClearedDisposable
 import com.androidhuman.example.simplegithub.ui.repo.RepositoryActivity
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChangeEvents
 import io.reactivex.Observable
@@ -30,6 +32,7 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
     internal val adapter by lazy { SearchAdapter() }
 
     internal val api by lazy { provideGithubApi(this) }
+    internal val searchHistoryDao by lazy { provideSearchHistoryDao(this) }
 
     internal val disposables = AutoClearedDisposable(this)
     internal val viewDisposable = AutoClearedDisposable(this, false)
@@ -93,6 +96,8 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
     }
 
     override fun onItemClick(repository: GithubRepo) {
+        // 로컬 저장소에 GithubRepo 추가
+        disposables += runOnIoScheduler { searchHistoryDao.add(repository) }
         startActivity<RepositoryActivity>(
             RepositoryActivity.KEY_USER_LOGIN to repository.owner.login,
             RepositoryActivity.KEY_REPO_NAME to repository.name
