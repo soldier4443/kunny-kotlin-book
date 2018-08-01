@@ -1,12 +1,5 @@
 package com.androidhuman.example.simplegithub.ui.search;
 
-import com.androidhuman.example.simplegithub.R;
-import com.androidhuman.example.simplegithub.api.GithubApi;
-import com.androidhuman.example.simplegithub.api.GithubApiProvider;
-import com.androidhuman.example.simplegithub.api.model.GithubRepo;
-import com.androidhuman.example.simplegithub.api.model.RepoSearchResponse;
-import com.androidhuman.example.simplegithub.ui.repo.RepositoryActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +14,13 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.androidhuman.example.simplegithub.R;
+import com.androidhuman.example.simplegithub.api.GithubApi;
+import com.androidhuman.example.simplegithub.api.GithubApiProvider;
+import com.androidhuman.example.simplegithub.api.model.GithubRepo;
+import com.androidhuman.example.simplegithub.api.model.RepoSearchResponse;
+import com.androidhuman.example.simplegithub.ui.repo.RepositoryActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

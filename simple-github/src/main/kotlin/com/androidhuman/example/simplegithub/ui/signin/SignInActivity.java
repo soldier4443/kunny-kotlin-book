@@ -1,13 +1,5 @@
 package com.androidhuman.example.simplegithub.ui.signin;
 
-import com.androidhuman.example.simplegithub.BuildConfig;
-import com.androidhuman.example.simplegithub.R;
-import com.androidhuman.example.simplegithub.api.AuthApi;
-import com.androidhuman.example.simplegithub.api.GithubApiProvider;
-import com.androidhuman.example.simplegithub.api.model.GithubAccessToken;
-import com.androidhuman.example.simplegithub.data.AuthTokenProvider;
-import com.androidhuman.example.simplegithub.ui.main.MainActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +11,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.androidhuman.example.simplegithub.BuildConfig;
+import com.androidhuman.example.simplegithub.R;
+import com.androidhuman.example.simplegithub.api.AuthApi;
+import com.androidhuman.example.simplegithub.api.GithubApiProvider;
+import com.androidhuman.example.simplegithub.api.model.GithubAccessToken;
+import com.androidhuman.example.simplegithub.data.AuthTokenProvider;
+import com.androidhuman.example.simplegithub.ui.main.MainActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;

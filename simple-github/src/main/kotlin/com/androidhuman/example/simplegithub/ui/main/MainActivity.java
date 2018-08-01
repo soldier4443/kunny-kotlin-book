@@ -1,14 +1,14 @@
 package com.androidhuman.example.simplegithub.ui.main;
 
-import com.androidhuman.example.simplegithub.R;
-import com.androidhuman.example.simplegithub.ui.search.SearchActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.androidhuman.example.simplegithub.R;
+import com.androidhuman.example.simplegithub.ui.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,9 +1,5 @@
 package com.androidhuman.example.simplegithub.ui.search;
 
-import com.androidhuman.example.simplegithub.R;
-import com.androidhuman.example.simplegithub.api.model.GithubRepo;
-import com.androidhuman.example.simplegithub.ui.GlideApp;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -15,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.androidhuman.example.simplegithub.R;
+import com.androidhuman.example.simplegithub.api.model.GithubRepo;
+import com.androidhuman.example.simplegithub.ui.GlideApp;
 
 import java.util.ArrayList;
 import java.util.List;

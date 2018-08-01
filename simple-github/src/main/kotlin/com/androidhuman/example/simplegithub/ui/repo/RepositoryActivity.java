@@ -1,11 +1,5 @@
 package com.androidhuman.example.simplegithub.ui.repo;
 
-import com.androidhuman.example.simplegithub.R;
-import com.androidhuman.example.simplegithub.api.GithubApi;
-import com.androidhuman.example.simplegithub.api.GithubApiProvider;
-import com.androidhuman.example.simplegithub.api.model.GithubRepo;
-import com.androidhuman.example.simplegithub.ui.GlideApp;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.androidhuman.example.simplegithub.R;
+import com.androidhuman.example.simplegithub.api.GithubApi;
+import com.androidhuman.example.simplegithub.api.GithubApiProvider;
+import com.androidhuman.example.simplegithub.api.model.GithubRepo;
+import com.androidhuman.example.simplegithub.ui.GlideApp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
