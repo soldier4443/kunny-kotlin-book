@@ -10,6 +10,7 @@ import com.androidhuman.example.simplegithub.BuildConfig
 import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.provideAuthApi
 import com.androidhuman.example.simplegithub.data.AuthTokenProvider
+import com.androidhuman.example.simplegithub.extensions.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -69,19 +70,17 @@ class SignInActivity : AppCompatActivity() {
     private fun getAccessToken(code: String) {
         showProgress()
 
-        disposables.run {
-            add(api.getAccessToken(BuildConfig.GITHUB_CLIENT_ID, BuildConfig.GITHUB_CLIENT_SECRET, code)
-                .map { it.accessToken }
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showProgress() }
-                .doOnTerminate { hideProgress() }
-                .subscribe({ token ->
-                    authTokenProvider.token = token
-                    launchMainActivity()
-                }) { error ->
-                    showError(error)
-                })
-        }
+        disposables += api.getAccessToken(BuildConfig.GITHUB_CLIENT_ID, BuildConfig.GITHUB_CLIENT_SECRET, code)
+            .map { it.accessToken }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showProgress() }
+            .doOnTerminate { hideProgress() }
+            .subscribe({ token ->
+                authTokenProvider.token = token
+                launchMainActivity()
+            }) { error ->
+                showError(error)
+            }
     }
 
     private fun showProgress() {

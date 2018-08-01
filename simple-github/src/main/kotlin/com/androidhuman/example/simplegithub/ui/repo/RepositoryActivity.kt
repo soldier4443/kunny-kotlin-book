@@ -6,6 +6,7 @@ import android.view.View
 import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.GithubApi
 import com.androidhuman.example.simplegithub.api.provideGithubApi
+import com.androidhuman.example.simplegithub.extensions.plusAssign
 import com.androidhuman.example.simplegithub.ui.GlideApp
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -48,34 +49,32 @@ class RepositoryActivity : AppCompatActivity() {
     }
 
     private fun showRepositoryInfo(login: String, repoName: String) {
-        disposables.run {
-            add(api.getRepository(login, repoName)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { showProgress() }
+        disposables += api.getRepository(login, repoName)
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { showProgress() }
 //                .doOnTerminate { hideProgress() }
-                .doOnError { hideProgress(true) }
-                .doOnComplete { hideProgress(true) }
-                .subscribe({ repo ->
-                    GlideApp.with(this@RepositoryActivity)
-                        .load(repo.owner.avatarUrl)
-                        .into(ivActivityRepositoryProfile)
+            .doOnError { hideProgress(true) }
+            .doOnComplete { hideProgress(true) }
+            .subscribe({ repo ->
+                GlideApp.with(this@RepositoryActivity)
+                    .load(repo.owner.avatarUrl)
+                    .into(ivActivityRepositoryProfile)
 
-                    tvActivityRepositoryName.text = repo.fullName
-                    tvActivityRepositoryStars.text = resources.getQuantityString(R.plurals.star, repo.stars, repo.stars)
-                    tvActivityRepositoryDescription.text = repo.description ?: getString(R.string.no_description_provided)
-                    tvActivityRepositoryLanguage.text = repo.language ?: getString(R.string.no_language_specified)
+                tvActivityRepositoryName.text = repo.fullName
+                tvActivityRepositoryStars.text = resources.getQuantityString(R.plurals.star, repo.stars, repo.stars)
+                tvActivityRepositoryDescription.text = repo.description ?: getString(R.string.no_description_provided)
+                tvActivityRepositoryLanguage.text = repo.language ?: getString(R.string.no_language_specified)
 
-                    try {
-                        val lastUpdate = dateFormatInResponse.parse(repo.updatedAt)
-                        tvActivityRepositoryLastUpdate.text = dateFormatToShow.format(lastUpdate)
-                    } catch (e: ParseException) {
-                        tvActivityRepositoryLastUpdate.text = getString(R.string.unknown)
-                    }
+                try {
+                    val lastUpdate = dateFormatInResponse.parse(repo.updatedAt)
+                    tvActivityRepositoryLastUpdate.text = dateFormatToShow.format(lastUpdate)
+                } catch (e: ParseException) {
+                    tvActivityRepositoryLastUpdate.text = getString(R.string.unknown)
+                }
 
-                }) { error ->
-                    showError(error.message)
-                })
-        }
+            }) { error ->
+                showError(error.message)
+            }
     }
 
     private fun showProgress() {

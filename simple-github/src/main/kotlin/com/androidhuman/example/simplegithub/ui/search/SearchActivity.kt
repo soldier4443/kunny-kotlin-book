@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager
 import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.model.GithubRepo
 import com.androidhuman.example.simplegithub.api.provideGithubApi
+import com.androidhuman.example.simplegithub.extensions.plusAssign
 import com.androidhuman.example.simplegithub.ui.repo.RepositoryActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -105,32 +106,30 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
     }
 
     private fun searchRepository(query: String) {
-        disposables.run {
-            add(api.searchRepository(query)
-                .flatMap {
-                    // Use flatMap: single item -> multiple items
-                    if (it.totalCount == 0) {
-                        Observable.error(IllegalStateException("No search result"))
-                    } else {
-                        Observable.just(it.items)
-                    }
+        disposables += api.searchRepository(query)
+            .flatMap {
+                // Use flatMap: single item -> multiple items
+                if (it.totalCount == 0) {
+                    Observable.error(IllegalStateException("No search result"))
+                } else {
+                    Observable.just(it.items)
                 }
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    clearResults()
-                    hideError()
-                    showProgress()
+            }
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                clearResults()
+                hideError()
+                showProgress()
+            }
+            .doOnTerminate { hideProgress() }
+            .subscribe({ items ->
+                with(adapter) {
+                    setItems(items)
+                    notifyDataSetChanged()
                 }
-                .doOnTerminate { hideProgress() }
-                .subscribe({ items ->
-                    with(adapter) {
-                        setItems(items)
-                        notifyDataSetChanged()
-                    }
-                }) { error ->
-                    showError(error.message)
-                })
-        }
+            }) { error ->
+                showError(error.message)
+            }
     }
 
     private fun updateTitle(query: String) {
