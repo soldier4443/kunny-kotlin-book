@@ -43,9 +43,7 @@ class SignInActivity : AppCompatActivity() {
             intent.launchUrl(this@SignInActivity, authUri)
         }
 
-        if (null != authTokenProvider.token) {
-            launchMainActivity()
-        }
+        authTokenProvider.token?.let { launchMainActivity() }
     }
 
     override fun onNewIntent(intent: Intent) {

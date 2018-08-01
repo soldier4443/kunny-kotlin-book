@@ -43,8 +43,6 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = this@SearchActivity.adapter
         }
-        rvActivitySearchList.layoutManager = LinearLayoutManager(this)
-        rvActivitySearchList.adapter = adapter
     }
 
     override fun onStop() {
