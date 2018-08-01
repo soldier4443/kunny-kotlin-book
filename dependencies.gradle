@@ -4,6 +4,7 @@ ext {
 
     rxAndroidVersion = '2.0.2'
     rxJavaVersion = '2.2.0'
+    rxBindingVersion = '2.1.1'
 
     // Build configuration
     buildToolsVersion = '27.1.1'
