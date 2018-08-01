@@ -1,5 +1,6 @@
 ext {
     kotlinVersion = '1.2.51'
+    ankoVersion = '0.10.5'
 
     // Build configuration
     buildToolsVersion = '27.1.1'
