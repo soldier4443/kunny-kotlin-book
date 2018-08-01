@@ -11,8 +11,8 @@ import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.provideAuthApi
 import com.androidhuman.example.simplegithub.data.AuthTokenProvider
 import com.androidhuman.example.simplegithub.extensions.plusAssign
+import com.androidhuman.example.simplegithub.ui.AutoClearedDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import org.jetbrains.anko.clearTask
 import org.jetbrains.anko.intentFor
@@ -25,7 +25,7 @@ class SignInActivity : AppCompatActivity() {
 
     internal val authTokenProvider by lazy { AuthTokenProvider(this) }
 
-    internal val disposables = CompositeDisposable()
+    internal val disposables = AutoClearedDisposable(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +56,6 @@ class SignInActivity : AppCompatActivity() {
         val code = uri.getQueryParameter("code") ?: throw IllegalStateException("No code exists")
 
         getAccessToken(code)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        // 사라지는 시점에 값이 있으면 call을 취소함
-        // 모든 디스포저블을 해제함 - 진행 중인 call이 있었다면 자동으로 취소됨
-        disposables.clear()
     }
 
     private fun getAccessToken(code: String) {

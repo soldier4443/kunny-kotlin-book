@@ -7,9 +7,9 @@ import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.GithubApi
 import com.androidhuman.example.simplegithub.api.provideGithubApi
 import com.androidhuman.example.simplegithub.extensions.plusAssign
+import com.androidhuman.example.simplegithub.ui.AutoClearedDisposable
 import com.androidhuman.example.simplegithub.ui.GlideApp
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_repository.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -25,7 +25,7 @@ class RepositoryActivity : AppCompatActivity() {
 
     internal val api: GithubApi by lazy { provideGithubApi(this) }
 
-    internal val disposables = CompositeDisposable()
+    internal val disposables = AutoClearedDisposable(this)
 
     internal val dateFormatInResponse = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX", Locale.getDefault())
 
@@ -41,11 +41,6 @@ class RepositoryActivity : AppCompatActivity() {
             ?: throw IllegalArgumentException("No repo info exists in extras")
 
         showRepositoryInfo(login, repo)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        disposables.clear()
     }
 
     private fun showRepositoryInfo(login: String, repoName: String) {

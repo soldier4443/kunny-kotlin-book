@@ -13,11 +13,11 @@ import com.androidhuman.example.simplegithub.R
 import com.androidhuman.example.simplegithub.api.model.GithubRepo
 import com.androidhuman.example.simplegithub.api.provideGithubApi
 import com.androidhuman.example.simplegithub.extensions.plusAssign
+import com.androidhuman.example.simplegithub.ui.AutoClearedDisposable
 import com.androidhuman.example.simplegithub.ui.repo.RepositoryActivity
 import com.jakewharton.rxbinding2.support.v7.widget.queryTextChangeEvents
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_search.*
 import org.jetbrains.anko.startActivity
 
@@ -31,8 +31,8 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
 
     internal val api by lazy { provideGithubApi(this) }
 
-    internal val disposables = CompositeDisposable()
-    internal val viewDisposable = CompositeDisposable()
+    internal val disposables = AutoClearedDisposable(this)
+    internal val viewDisposable = AutoClearedDisposable(this, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,16 +42,6 @@ class SearchActivity : AppCompatActivity(), SearchAdapter.ItemClickListener {
         with(rvActivitySearchList) {
             layoutManager = LinearLayoutManager(this@SearchActivity)
             adapter = this@SearchActivity.adapter
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        disposables.clear()
-
-        // 종료하고 있는 경우에만 취소! (왜 onDestroy를 안할까?)
-        if (isFinishing) {
-            viewDisposable.clear()
         }
     }
 
